@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { site } from "../../config/site";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title={`Blog | ${site.brand}`} description="Belgrad kurye ve oturum süreci hakkında rehber içerikler.">
+  <h1 class="text-2xl font-bold">Blog</h1>
+  <p class="mt-2 text-zinc-700">Rehber içerikler ve sık sorulanların detaylı açıklamaları.</p>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-2">
+    {posts.map((p) => (
+      <a class="card p-6 hover:bg-zinc-50" href={`/blog/${p.slug}/`}>
+        <p class="text-xs text-zinc-500">
+          {p.data.pubDate.toLocaleDateString("tr-TR")}
+        </p>
+        <p class="mt-2 text-lg font-semibold">{p.data.title}</p>
+        <p class="mt-2 text-sm text-zinc-700">{p.data.description}</p>
+      </a>
+    ))}
+  </div>
+</BaseLayout>

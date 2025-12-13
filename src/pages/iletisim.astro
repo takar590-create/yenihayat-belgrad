@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../config/site";
+
+const teklifText = encodeURIComponent(
+  "Merhaba, Belgrad kurye danışmanlığı için teklif almak istiyorum. Araç tercihim: (bisiklet/motor/araba/kararsız). Ne zaman gelebilirim: ..."
+);
+const wa = `https://wa.me/${site.whatsappNumber}?text=${teklifText}`;
+---
+
+<BaseLayout title={`İletişim | ${site.brand}`} description="Belgrad kurye danışmanlığı için WhatsApp üzerinden iletişime geçin.">
+  <h1 class="text-2xl font-bold">İletişim</h1>
+  <p class="mt-2 text-zinc-700">
+    En hızlı iletişim WhatsApp üzerinden. Kısa bilgi yazman teklif sürecini hızlandırır.
+  </p>
+
+  <div class="mt-6 card p-6">
+    <p class="font-semibold">Teklif almak için</p>
+    <p class="mt-2 text-sm text-zinc-700">
+      Araç tercihini (bisiklet/motor/araba) ve ne zaman gelebileceğini yaz.
+    </p>
+    <a class="btn btn-primary mt-4" href={wa} target="_blank" rel="noopener noreferrer">
+      WhatsApp’tan Teklif Al
+    </a>
+  </div>
+
+  <div class="mt-6 text-xs text-zinc-500">
+    Not: Bu site bilgilendirme amaçlıdır; resmî kurum değildir.
+  </div>
+</BaseLayout>

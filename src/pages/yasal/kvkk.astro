@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { site } from "../../config/site";
+---
+
+<BaseLayout title={`KVKK & Gizlilik | ${site.brand}`} description="KVKK, gizlilik ve yasal bilgilendirme metinleri.">
+  <h1 class="text-2xl font-bold">KVKK & Gizlilik</h1>
+  <p class="mt-4 text-sm text-zinc-700">
+    Bu sayfa taslaktır. Yayına çıkmadan önce firmanın gerçek unvanı, iletişim bilgileri ve veri işleme süreçlerine göre düzenlenmelidir.
+  </p>
+
+  <div class="mt-6 space-y-4 text-sm text-zinc-700">
+    <p><b>1) Amaç</b> — İletişim taleplerini yanıtlamak.</p>
+    <p><b>2) Toplanan veriler</b> — WhatsApp üzerinden iletilen bilgiler (ad/telefon/mesaj).</p>
+    <p><b>3) Saklama</b> — Sadece iletişim amaçlı, makul süre.</p>
+    <p><b>4) Üçüncü taraflar</b> — WhatsApp altyapısı.</p>
+    <p><b>5) Haklar</b> — Bilgi alma ve düzeltme talepleri.</p>
+  </div>
+</BaseLayout>

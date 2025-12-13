@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../config/site";
+---
+
+<BaseLayout title={`Süreç | ${site.brand}`} description="Türkiye’den Belgrad’da kurye olarak başlama süreci: ön değerlendirme → evrak → Belgrad → şirket → oturum → işe başlama.">
+  <h1 class="text-2xl font-bold">Süreç</h1>
+  <p class="mt-2 text-zinc-700">Genel akış (dosyaya göre değişebilir):</p>
+
+  <ol class="mt-8 space-y-4">
+    {[
+      ["WhatsApp ön değerlendirme", "Kısa sorularla uygunluk ve planlama."],
+      ["Evrak ve geliş planı", "Gerekli evraklar + zamanlama netleşir."],
+      ["Belgrad’a geliş", "Yerinde koordinasyon ve yönlendirme."],
+      ["Şirket kuruluşu", "Kuruluş adımları ve hazırlıklar."],
+      ["Oturum başvurusu", "Başvuru ve süreç takibi."],
+      ["İşe başlatma", "Platform hesabı, araç/konaklama adımları, başlangıç planı."],
+    ].map(([t, d], idx) => (
+      <li class="card p-5">
+        <p class="font-semibold">{idx + 1}. {t}</p>
+        <p class="mt-1 text-sm text-zinc-700">{d}</p>
+      </li>
+    ))}
+  </ol>
+</BaseLayout>

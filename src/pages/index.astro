@@ -1,0 +1,84 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../config/site";
+
+const waText = encodeURIComponent(site.whatsappDefaultText);
+const wa = `https://wa.me/${site.whatsappNumber}?text=${waText}`;
+---
+
+<BaseLayout title={site.title} description={site.description}>
+  <section class="grid gap-8 md:grid-cols-2 md:items-center">
+    <div>
+      <span class="badge">Belgrad odaklı • WhatsApp ile hızlı iletişim</span>
+      <h1 class="mt-4 text-3xl font-bold tracking-tight md:text-5xl">
+        Belgrad’da kurye olarak başlamak için uçtan uca danışmanlık
+      </h1>
+      <p class="mt-4 text-zinc-700">
+        Şirket kuruluşu, oturum başvurusu, platform hesabı, araç ve konaklama desteği.
+        Tüm süreç WhatsApp üzerinden şeffaf şekilde ilerler.
+      </p>
+
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+        <a class="btn btn-primary" href={wa} target="_blank" rel="noopener noreferrer">WhatsApp’tan Hemen Yaz</a>
+        <a class="btn btn-ghost" href="/surec">Süreç Nasıl İşliyor?</a>
+      </div>
+
+      <div class="mt-6 grid gap-3 md:grid-cols-3">
+        <div class="card p-4">
+          <p class="text-sm font-semibold">Hızlı Ön Değerlendirme</p>
+          <p class="mt-1 text-sm text-zinc-600">2 dakikada uygunluk kontrolü.</p>
+        </div>
+        <div class="card p-4">
+          <p class="text-sm font-semibold">Belgrad’da Yerel Ekip</p>
+          <p class="mt-1 text-sm text-zinc-600">Sahada destek, yönlendirme.</p>
+        </div>
+        <div class="card p-4">
+          <p class="text-sm font-semibold">Uçtan Uca Plan</p>
+          <p class="mt-1 text-sm text-zinc-600">Şirket → oturum → işe başlangıç.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card p-6">
+      <p class="text-sm font-semibold">En çok sorulanlar</p>
+      <ul class="mt-4 space-y-3 text-sm text-zinc-700">
+        <li>• Şirket açılışı nasıl oluyor?</li>
+        <li>• Oturum işlemleri ne kadar sürer?</li>
+        <li>• Motor / bisiklet / araba: hangisi mantıklı?</li>
+        <li>• Konaklama ve banka hesabı desteği var mı?</li>
+      </ul>
+      <a class="btn btn-primary mt-6 w-full" href="/sss">SSS’ye Git</a>
+    </div>
+  </section>
+
+  <section class="mt-14">
+    <h2 class="text-xl font-bold">Hizmetler</h2>
+    <div class="mt-6 grid gap-4 md:grid-cols-3">
+      {[
+        { t: "Şirket Kuruluşu", d: "Belgrad’da şirket açılış süreci planlama ve koordinasyon." },
+        { t: "Oturum Başvurusu", d: "Başvuru hazırlığı ve süreç takibi." },
+        { t: "İşe Başlatma", d: "Platform hesabı, araç ve başlangıç planı desteği." },
+        { t: "Konaklama", d: "Hostel/ev seçenekleri, ilk gün planı." },
+        { t: "Araç Desteği", d: "Bisiklet/motor/araba seçeneklerinin kıyaslanması." },
+        { t: "Banka Hesabı", d: "Kişisel/şirket hesabı için adım adım yönlendirme." },
+      ].map((x) => (
+        <div class="card p-5">
+          <p class="font-semibold">{x.t}</p>
+          <p class="mt-2 text-sm text-zinc-600">{x.d}</p>
+        </div>
+      ))}
+    </div>
+    <a class="btn btn-ghost mt-6" href="/hizmetler">Tüm Hizmetleri Gör</a>
+  </section>
+
+  <section class="mt-14 card p-6">
+    <h2 class="text-xl font-bold">Teklif al</h2>
+    <p class="mt-2 text-sm text-zinc-700">
+      Fiyatlar dosyaya göre değişir. En doğru teklif için WhatsApp’tan kısa bilgi paylaşman yeterli.
+    </p>
+    <div class="mt-4 flex flex-col gap-3 sm:flex-row">
+      <a class="btn btn-primary" href={wa} target="_blank" rel="noopener noreferrer">WhatsApp’tan Teklif Al</a>
+      <a class="btn btn-ghost" href="/iletisim">İletişim Sayfası</a>
+    </div>
+  </section>
+</BaseLayout>

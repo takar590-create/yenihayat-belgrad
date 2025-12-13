@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { site } from "../config/site";
+
+const faqs = [
+  { q: "Şirket açılışı nasıl oluyor?", a: "Genel olarak WhatsApp ön değerlendirme → evrak planı → Belgrad’da kuruluş adımları şeklinde ilerler. Dosyaya göre değişebilir." },
+  { q: "Oturum işlemleri ne kadar sürer?", a: "Süreçler dosyaya ve resmi takvime göre değişir. Biz planlama ve takipte yanındayız." },
+  { q: "Oturum kaç aylık/yıllık veriliyor?", a: "Dosya ve başvuru türüne göre değişebilir. Net tablo için kısa ön değerlendirme yapıyoruz." },
+  { q: "Motor / bisiklet / araba: hangisiyle başlamalıyım?", a: "Bütçe, çalışma düzeni ve hedef teslimat temposuna göre birlikte karar veriyoruz." },
+  { q: "Konaklama desteği var mı?", a: "Evet, ilk günler için hostel/ev seçeneklerinde yönlendirme sağlanır." },
+  { q: "Banka hesabı açılışı konusunda destek var mı?", a: "Evet, kişisel/şirket hesabı senaryona göre adım adım yönlendiriyoruz." },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.q,
+    "acceptedAnswer": { "@type": "Answer", "text": f.a },
+  })),
+};
+---
+
+<BaseLayout title={`SSS | ${site.brand}`} description="Belgrad kurye danışmanlığı hakkında sık sorulan sorular.">
+  <h1 class="text-2xl font-bold">Sık Sorulan Sorular</h1>
+  <p class="mt-2 text-zinc-700">En güncel bilgi için WhatsApp’tan yazabilirsin.</p>
+
+  <div class="mt-8 space-y-4">
+    {faqs.map((f) => (
+      <details class="card p-5">
+        <summary class="cursor-pointer font-semibold">{f.q}</summary>
+        <p class="mt-2 text-sm text-zinc-700">{f.a}</p>
+      </details>
+    ))}
+  </div>
+
+  <script type="application/ld+json">
+    {JSON.stringify(faqSchema)}
+  </script>
+</BaseLayout>

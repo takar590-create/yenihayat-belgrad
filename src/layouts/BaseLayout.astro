@@ -1,0 +1,52 @@
+---
+import SeoHead from "../components/SeoHead.astro";
+import WhatsAppFloat from "../components/WhatsAppFloat.astro";
+import "../styles/global.css";
+import { site } from "../config/site";
+
+const { title, description, canonical, noindex } = Astro.props;
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <SeoHead title={title} description={description} canonical={canonical} noindex={noindex} />
+  </head>
+  <body>
+    <header class="border-b border-zinc-200 bg-white/80 backdrop-blur">
+      <div class="container flex items-center justify-between py-4">
+        <a href="/" class="text-base font-bold tracking-tight">{site.brand}</a>
+
+        <nav class="hidden gap-6 text-sm font-medium md:flex">
+          <a class="hover:text-zinc-700" href="/hizmetler">Hizmetler</a>
+          <a class="hover:text-zinc-700" href="/surec">Süreç</a>
+          <a class="hover:text-zinc-700" href="/sss">SSS</a>
+          <a class="hover:text-zinc-700" href="/blog">Blog</a>
+          <a class="hover:text-zinc-700" href="/iletisim">İletişim</a>
+        </nav>
+
+        <a href="/iletisim" class="btn btn-primary hidden md:inline-flex">Teklif Al</a>
+      </div>
+    </header>
+
+    <main class="container py-10">
+      <slot />
+    </main>
+
+    <footer class="border-t border-zinc-200">
+      <div class="container py-8 text-sm text-zinc-600">
+        <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <p>© {new Date().getFullYear()} {site.brand}</p>
+          <div class="flex gap-4">
+            <a class="hover:text-zinc-800" href="/yasal/kvkk">KVKK & Gizlilik</a>
+          </div>
+        </div>
+        <p class="mt-4 text-xs text-zinc-500">
+          Bilgilendirme amaçlıdır. Resmî kurum değildir; süreç ve sonuçlar dosyaya göre değişebilir.
+        </p>
+      </div>
+    </footer>
+
+    <WhatsAppFloat />
+  </body>
+</html>

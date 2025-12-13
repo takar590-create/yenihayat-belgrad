@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { site } from "../../config/site";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+  return posts.map((p) => ({ params: { slug: p.slug }, props: { post: p } }));
+}
+
+const { post } = Astro.props;
+
+const waText = encodeURIComponent(
+  `Merhaba, şu yazı hakkında soru sormak istiyorum: "${post.data.title}".`
+);
+const wa = `https://wa.me/${site.whatsappNumber}?text=${waText}`;
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "datePublished": post.data.pubDate.toISOString(),
+  "dateModified": (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+  "inLanguage": "tr-TR",
+};
+---
+
+<BaseLayout title={`${post.data.title} | ${site.brand}`} description={post.data.description}>
+  <article class="prose max-w-none">
+    <h1>{post.data.title}</h1>
+    <p class="text-sm text-zinc-500">
+      {post.data.pubDate.toLocaleDateString("tr-TR")}
+    </p>
+
+    <div class="mt-6">
+      <slot />
+    </div>
+  </article>
+
+  <div class="mt-10 card p-6">
+    <p class="font-semibold">Bu konuda hızlı cevap ister misin?</p>
+    <p class="mt-2 text-sm text-zinc-700">WhatsApp’tan yaz, dosyana göre netleştirelim.</p>
+    <a class="btn btn-primary mt-4" href={wa} target="_blank" rel="noopener noreferrer">WhatsApp’tan Sor</a>
+  </div>
+
+  <script type="application/ld+json">
+    {JSON.stringify(articleSchema)}
+  </script>
+</BaseLayout>
