@@ -1,25 +1,105 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { site } from "../config/site";
+import { site, getWhatsAppUrl } from "../config/site";
+
+const waGeneral = getWhatsAppUrl(site.whatsappTexts.general);
+const waDocs = getWhatsAppUrl(site.whatsappTexts.documents);
 ---
 
-<BaseLayout title={`Süreç | ${site.brand}`} description="Türkiye’den Belgrad’da kurye olarak başlama süreci: ön değerlendirme → evrak → Belgrad → şirket → oturum → işe başlama.">
-  <h1 class="text-2xl font-bold">Süreç</h1>
-  <p class="mt-2 text-zinc-700">Genel akış (dosyaya göre değişebilir):</p>
+<BaseLayout
+  title={`Süreç | ${site.brand}`}
+  description="Türkiye’den Belgrad’da kurye olarak başlama süreci: WhatsApp ön değerlendirme → evrak → şirket → banka → adres kaydı (Bela Karton) → oturum başvurusu → Glovo/Wolt hesabı → işe başlangıç."
+>
+  <section class="flex flex-col gap-2">
+    <h1 class="text-3xl font-bold tracking-tight md:text-4xl">Süreç</h1>
+    <p class="mt-1 text-zinc-700 max-w-2xl">
+      Sırbistan’da şirket kurarak oturum alma ve kurye olarak çalışma sürecini adım adım yönetiyoruz.
+      Süreç dosyana ve resmi yoğunluğa göre değişebilir; en doğru planı WhatsApp üzerinden çıkarıyoruz.
+    </p>
 
-  <ol class="mt-8 space-y-4">
+    <div class="mt-3 flex flex-col gap-3 sm:flex-row">
+      <a class="btn btn-primary btn-3d" href={waGeneral} target="_blank" rel="noopener noreferrer">
+        WhatsApp’tan Başla
+      </a>
+      <a class="btn btn-ghost" href={waDocs} target="_blank" rel="noopener noreferrer">
+        Evrak Listesi İste
+      </a>
+      <a class="btn btn-ghost" href="/paketler">Paketleri Gör</a>
+    </div>
+  </section>
+
+  <section class="mt-10">
+    <div class="card p-6">
+      <h2 class="text-xl font-bold">Genel akış</h2>
+      <p class="mt-2 text-sm text-zinc-700">
+        Aşağıdaki adımlar çoğu dosyada aynı sırayla ilerler. Bazı adımlar, durumuna göre eklenebilir veya farklılaşabilir.
+      </p>
+    </div>
+  </section>
+
+  <ol class="mt-6 space-y-4">
     {[
-      ["WhatsApp ön değerlendirme", "Kısa sorularla uygunluk ve planlama."],
-      ["Evrak ve geliş planı", "Gerekli evraklar + zamanlama netleşir."],
-      ["Belgrad’a geliş", "Yerinde koordinasyon ve yönlendirme."],
-      ["Şirket kuruluşu", "Kuruluş adımları ve hazırlıklar."],
-      ["Oturum başvurusu", "Başvuru ve süreç takibi."],
-      ["İşe başlatma", "Platform hesabı, araç/konaklama adımları, başlangıç planı."],
+      [
+        "WhatsApp üzerinden iletişim ve evrak listesi",
+        "Bize yazdığında kısa bir ön değerlendirme yaparız ve durumuna göre gerekli evrak listesini paylaşırız.",
+      ],
+      [
+        "Başlangıç evrakları ile sürecin başlatılması",
+        "Mezuniyet belgesi, pasaport ve avukata verilecek vekâlet ile süreci başlatırız. Mezuniyet belgesinin tercümesi tamamlandıktan sonra şirket kuruluş adımlarına geçilir.",
+      ],
+      [
+        "Şirketin aktif hale gelmesi",
+        "Mezuniyet belgesi tercümesinden sonra şirketiniz genellikle yaklaşık 1 hafta içinde aktif hale gelir (resmi yoğunluğa göre değişebilir).",
+      ],
+      [
+        "Banka hesabı açılışları",
+        "Şirket açıldıktan sonra sizinle birlikte şirket evraklarıyla banka hesabı açılış işlemlerini tamamlarız.",
+      ],
+      [
+        "Adres kaydı ve “Bela Karton” (beyaz kâğıt)",
+        "Oturum başvurusu için kiraladığınız evin sahibiyle birlikte karakola gidip adres kaydını yaptırırız ve “Bela Karton” belgesini alırız.",
+      ],
+      [
+        "Oturum başvurusu (avukat ile)",
+        "Bela Karton ve şirket evraklarınızla, avukatlarımız aracılığıyla oturum başvuru sürecini başlatırız.",
+      ],
+      [
+        "Tax/harç ödemesi ve sisteme yükleme",
+        "Başvurudan sonra ödeme için Tax/harç tutarı çıkar. İsterseniz bankanızdan, isterseniz yönlendirdiğimiz menjačnica üzerinden ödeyip sisteme yükleriz.",
+      ],
+      [
+        "Başvuru evrakının e-posta ile gelmesi",
+        "Ödeme sisteme yüklendikten sonra oturum başvuru evrağınız e-posta adresinize gelir. Süreci şeffaf şekilde birlikte takip ederiz.",
+      ],
+      [
+        "Glovo/Wolt hesabı ve işe başlangıç",
+        "İsterseniz acentemiz bünyesinde şahsi (bireysel) adınıza platform hesabı açılışı yapılır. Araç/konaklama planı ve çalışma düzeni birlikte netleştirilir.",
+      ],
     ].map(([t, d], idx) => (
-      <li class="card p-5">
-        <p class="font-semibold">{idx + 1}. {t}</p>
-        <p class="mt-1 text-sm text-zinc-700">{d}</p>
+      <li class="card p-6">
+        <p class="text-sm font-semibold text-zinc-500">Adım {idx + 1}</p>
+        <p class="mt-1 text-lg font-semibold">{t}</p>
+        <p class="mt-2 text-sm text-zinc-700">{d}</p>
       </li>
     ))}
   </ol>
+
+  <section class="mt-10 grid gap-4 md:grid-cols-2">
+    <div class="card p-6">
+    
+
+  <section class="mt-10 card p-6">
+    <h2 class="text-xl font-bold">Hazırsan başlayalım</h2>
+    <p class="mt-2 text-sm text-zinc-700">
+      2 dakikalık kısa bilgi ile uygunluğunu kontrol edelim, sana net bir yol haritası çıkaralım.
+    </p>
+    <div class="mt-4 flex flex-col gap-3 sm:flex-row">
+      <a class="btn btn-primary btn-3d" href={waGeneral} target="_blank" rel="noopener noreferrer">
+        WhatsApp’tan Yaz
+
+      </a>
+      <a class="btn btn-ghost" href="/sss">SSS’ye Git</a>
+      <a class="btn btn-ghost" href="/iletisim">İletişim</a>
+    </div>
+  </section>
 </BaseLayout>

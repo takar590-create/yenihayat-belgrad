@@ -13,10 +13,19 @@ export const site = {
     offer:
       "Merhaba, Belgrad’da kurye olarak başlamak istiyorum. Araç tercihim: (bisiklet/motor/araba/kararsız). Ne zaman gelebilirim: (tarih). Teklif almak istiyorum.",
     documents:
-      "Merhaba, Belgrad kurye için gerekli evrak listesini paylaşır mısınız?"
+      "Merhaba, Belgrad kurye için gerekli evrak listesini paylaşır mısınız?",
+  },
+
+  socials: {
+    instagram: "https://instagram.com/INSTAGRAM_KULLANICIADI",
+    tiktok: "https://www.tiktok.com/@TIKTOK_KULLANICIADI",
   },
 
   title: "Belgrad Kurye Danışmanlığı | Şirket + Oturum + İşe Başlatma",
   description:
     "Belgrad’da kurye olarak başlamak isteyenler için şirket kuruluşu, oturum başvurusu, platform hesap açılışı, konaklama ve araç desteği. İletişim WhatsApp üzerinden.",
-};
+} as const;
+
+export function getWhatsAppUrl(text: string) {
+  return `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(text)}`;
+}

@@ -1,27 +1,53 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { site } from "../config/site";
+import ContactLinks from "../components/ContactLinks.astro";
+import { site, getWhatsAppUrl } from "../config/site";
 
-const teklifText = encodeURIComponent(
-  "Merhaba, Belgrad kurye danışmanlığı için teklif almak istiyorum. Araç tercihim: (bisiklet/motor/araba/kararsız). Ne zaman gelebilirim: ..."
-);
-const wa = `https://wa.me/${site.whatsappNumber}?text=${teklifText}`;
+const waOffer = getWhatsAppUrl(site.whatsappTexts.offer);
+const waDocs = getWhatsAppUrl(site.whatsappTexts.documents);
+const waGeneral = getWhatsAppUrl(site.whatsappTexts.general);
 ---
 
-<BaseLayout title={`İletişim | ${site.brand}`} description="Belgrad kurye danışmanlığı için WhatsApp üzerinden iletişime geçin.">
+<BaseLayout title={`İletişim | ${site.brand}`} description="Belgrad kurye danışmanlığı için WhatsApp, Instagram ve TikTok üzerinden iletişime geçin.">
   <h1 class="text-2xl font-bold">İletişim</h1>
   <p class="mt-2 text-zinc-700">
-    En hızlı iletişim WhatsApp üzerinden. Kısa bilgi yazman teklif sürecini hızlandırır.
+    En hızlı iletişim WhatsApp üzerinden. Sosyal medya hesaplarımızdan da bize ulaşabilirsin.
   </p>
 
-  <div class="mt-6 card p-6">
-    <p class="font-semibold">Teklif almak için</p>
-    <p class="mt-2 text-sm text-zinc-700">
-      Araç tercihini (bisiklet/motor/araba) ve ne zaman gelebileceğini yaz.
-    </p>
-    <a class="btn btn-primary mt-4" href={wa} target="_blank" rel="noopener noreferrer">
-      WhatsApp’tan Teklif Al
-    </a>
+  <div class="mt-4">
+    <ContactLinks variant="page" showLabels={true} />
+  </div>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+    <div class="card p-6">
+      <p class="font-semibold">Teklif almak için</p>
+      <p class="mt-2 text-sm text-zinc-700">
+        Araç tercihini (bisiklet/motor/araba) ve ne zaman gelebileceğini yaz.
+      </p>
+      <a class="btn btn-primary mt-4 w-full" href={waOffer} target="_blank" rel="noopener noreferrer">
+        WhatsApp’tan Teklif Al
+      </a>
+    </div>
+
+    <div class="card p-6">
+      <p class="font-semibold">Evrak listesi</p>
+      <p class="mt-2 text-sm text-zinc-700">
+        Gerekli evrak listesini iste, sana hızlıca gönderelim.
+      </p>
+      <a class="btn btn-ghost mt-4 w-full" href={waDocs} target="_blank" rel="noopener noreferrer">
+        Evrak Listesi İste
+      </a>
+    </div>
+
+    <div class="card p-6">
+      <p class="font-semibold">Uygunluk kontrolü</p>
+      <p class="mt-2 text-sm text-zinc-700">
+        Kısa sorularla uygunluk ve yol haritası çıkaralım.
+      </p>
+      <a class="btn btn-ghost mt-4 w-full" href={waGeneral} target="_blank" rel="noopener noreferrer">
+        Uygunluk Kontrolü
+      </a>
+    </div>
   </div>
 
   <div class="mt-6 text-xs text-zinc-500">
