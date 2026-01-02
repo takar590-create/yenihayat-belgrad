@@ -1,91 +1,142 @@
 ---
 import SeoHead from "../components/SeoHead.astro";
 import WhatsAppFloat from "../components/WhatsAppFloat.astro";
+import ContactLinks from "../components/ContactLinks.astro";
 import "../styles/global.css";
 import { site, getWhatsAppUrl } from "../config/site";
 
+import { getLangFromPath, stripLangPrefix, withLang } from "../i18n/lang";
+import { t } from "../i18n/translations";
+
 const { title, description, canonical, noindex } = Astro.props;
 
-// Header ikonundaki WhatsApp linki (genel mesaj)
-const waHeader = getWhatsAppUrl(site.whatsappTexts.general);
+// Dil tespiti
+const lang = getLangFromPath(Astro.url.pathname);
+const tr = t(lang);
+
+// Brand linki: hangi dildeysen oranın anasayfasına gitsin
+const homeHref = withLang("/", lang);
+
+// Dil switch: aynı sayfada kalacak şekilde TR<->AZ
+const basePath = stripLangPrefix(Astro.url.pathname);
+const trHref = withLang(basePath, "tr");
+const azHref = withLang(basePath, "az");
+
+// ✅ Header WhatsApp linki (genel mesaj) — DİLE GÖRE
+const waHeader = getWhatsAppUrl(tr.home.waText.general);
+
+// Menü linkleri (dile göre prefix)
+const navItems = [
+  { href: "/hizmetler", label: tr.nav.services },
+  { href: "/surec", label: tr.nav.process },
+  { href: "/sss", label: tr.nav.faq },
+  { href: "/blog", label: tr.nav.blog },
+  { href: "/iletisim", label: tr.nav.contact },
+  { href: "/paketler", label: tr.nav.packages },
+].map((i) => ({
+  ...i,
+  href: withLang(i.href, lang),
+}));
+
+// CTA linki (dile göre)
+const offerHref = withLang("/iletisim", lang);
+
+// KVKK AZ yoksa TR link kalsın (AZ ekleyince withLang yaparız)
+const kvkkHref = "/yasal/kvkk";
 ---
 
 <!doctype html>
-<html lang="tr">
+<html lang={lang}>
   <head>
     <SeoHead title={title} description={description} canonical={canonical} noindex={noindex} />
   </head>
-  <body>
-    <header class="border-b border-zinc-200 bg-white/80 backdrop-blur">
-      <div class="container flex items-center justify-between py-4">
-        <a href="/" class="text-base font-bold tracking-tight">{site.brand}</a>
 
+  <body>
+    <header class="sticky top-0 z-50 border-b border-zinc-200 bg-white/80 backdrop-blur text-zinc-900">
+      <div class="container flex items-center justify-between py-4">
+        <a href={homeHref} class="text-base font-bold tracking-tight">{site.brand}</a>
+
+        <!-- DESKTOP NAV -->
         <nav class="hidden gap-6 text-sm font-medium md:flex">
-          <a class="hover:text-zinc-700" href="/hizmetler">Hizmetler</a>
-          <a class="hover:text-zinc-700" href="/surec">Süreç</a>
-          <a class="hover:text-zinc-700" href="/sss">SSS</a>
-          <a class="hover:text-zinc-700" href="/blog">Blog</a>
-          <a class="hover:text-zinc-700" href="/iletisim">İletişim</a>
-          <a class="hover:text-zinc-700" href="/paketler">Paketler</a>
+          {navItems.map((i) => (
+            <a class="hover:text-zinc-700" href={i.href}>{i.label}</a>
+          ))}
         </nav>
 
-        <!-- SAĞ AKSİYONLAR: ikonlar + tek Teklif Al -->
+        <!-- DESKTOP SAĞ AKSİYONLAR -->
         <div class="hidden items-center gap-3 md:flex">
-          <!-- WhatsApp -->
-          <a
-            href={waHeader}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="icon-btn"
-            aria-label="WhatsApp"
-            title="WhatsApp"
-          >
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M20.52 3.48A11.9 11.9 0 0 0 12.06 0C5.5 0 .16 5.34.16 11.9c0 2.1.55 4.15 1.6 5.96L0 24l6.33-1.65a11.86 11.86 0 0 0 5.73 1.46h.01c6.56 0 11.9-5.34 11.9-11.9 0-3.18-1.24-6.17-3.45-8.43ZM12.06 21.8h-.01a9.9 9.9 0 0 1-5.04-1.37l-.36-.21-3.75.98 1-3.65-.24-.38A9.86 9.86 0 0 1 2.16 11.9C2.16 6.45 6.6 2 12.06 2a9.86 9.86 0 0 1 6.98 2.89 9.82 9.82 0 0 1 2.88 7.01c0 5.45-4.44 9.9-9.86 9.9Zm5.74-7.4c-.31-.16-1.86-.92-2.15-1.02-.29-.11-.5-.16-.71.16-.21.31-.81 1.02-.99 1.23-.18.21-.36.23-.67.08-.31-.16-1.29-.47-2.46-1.5-.91-.81-1.53-1.82-1.71-2.13-.18-.31-.02-.48.13-.64.14-.14.31-.36.47-.54.16-.18.21-.31.31-.52.1-.21.05-.39-.03-.54-.08-.16-.71-1.71-.97-2.35-.26-.62-.52-.54-.71-.55l-.61-.01c-.21 0-.54.08-.83.39-.29.31-1.09 1.07-1.09 2.61 0 1.54 1.12 3.03 1.27 3.24.16.21 2.2 3.36 5.33 4.71.75.32 1.33.51 1.79.65.75.24 1.43.21 1.97.13.6-.09 1.86-.76 2.12-1.49.26-.73.26-1.36.18-1.49-.08-.13-.29-.21-.6-.36Z"
-              />
-            </svg>
-          </a>
+          <ContactLinks iconSize={18} />
 
-          <!-- Instagram -->
-          <a
-            href={site.socials.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="icon-btn"
-            aria-label="Instagram"
-            title="Instagram"
-          >
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M7.5 2h9A5.5 5.5 0 0 1 22 7.5v9A5.5 5.5 0 0 1 16.5 22h-9A5.5 5.5 0 0 1 2 16.5v-9A5.5 5.5 0 0 1 7.5 2Zm9 2h-9A3.5 3.5 0 0 0 4 7.5v9A3.5 3.5 0 0 0 7.5 20h9a3.5 3.5 0 0 0 3.5-3.5v-9A3.5 3.5 0 0 0 16.5 4ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm5.6-2.65a1.15 1.15 0 1 1 0 2.3 1.15 1.15 0 0 1 0-2.3Z"
-              />
-            </svg>
-          </a>
+          <!-- Dil -->
+          <div class="flex items-center gap-2 text-xs text-zinc-700">
+            <a class="rounded-lg border border-zinc-200 px-2 py-1 hover:bg-zinc-50" href={trHref}>TR</a>
+            <a class="rounded-lg border border-zinc-200 px-2 py-1 hover:bg-zinc-50" href={azHref}>AZ</a>
+          </div>
 
-          <!-- TikTok -->
-          <a
-            href={site.socials.tiktok}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="icon-btn"
-            aria-label="TikTok"
-            title="TikTok"
-          >
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-              <path
-                fill="currentColor"
-                d="M16.7 3c.4 2.3 2 3.9 4.3 4.3v3.3c-1.5.1-2.9-.4-4.1-1.3v6.3c0 3.6-2.9 6.5-6.5 6.5S4 19.2 4 15.6s2.9-6.5 6.5-6.5c.3 0 .7 0 1 .1v3.6c-.3-.1-.6-.2-1-.2-1.6 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3V3h3.2Z"
-              />
-            </svg>
-          </a>
+          <!-- Teklif Al -->
+          <a href={offerHref} class="btn btn-primary btn-3d">{tr.cta.getOffer}</a>
+        </div>
 
-          <!-- SADECE 1 ADET "Teklif Al" (sağdaki kalsın) -->
-          <a href="/iletisim" class="btn btn-primary btn-3d">Teklif Al</a>
+        <!-- MOBILE SAĞ AKSİYONLAR -->
+        <div class="flex items-center gap-2 md:hidden">
+          <ContactLinks iconSize={18} />
+          <a href={offerHref} class="btn btn-primary btn-3d px-3 py-2 text-sm">{tr.cta.offerShort}</a>
+
+          <button
+            id="menuBtn"
+            class="icon-btn"
+            type="button"
+            aria-label="Menüyü aç/kapat"
+            aria-expanded="false"
+            aria-controls="mobileMenu"
+          >
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
       </div>
+
+      <!-- MOBILE MENU -->
+      <div id="mobileMenu" class="hidden border-t border-zinc-200 bg-white md:hidden">
+        <div class="container py-4">
+          <nav class="flex flex-col gap-3 text-sm font-medium">
+            {navItems.map((i) => (
+              <a class="hover:text-zinc-700 py-2" href={i.href}>{i.label}</a>
+            ))}
+          </nav>
+
+          <div class="mt-4 flex items-center justify-between">
+            <!-- Dil -->
+            <div class="flex items-center gap-2 text-xs text-zinc-700">
+              <a class="rounded-lg border border-zinc-200 px-2 py-1 hover:bg-zinc-50" href={trHref}>TR</a>
+              <a class="rounded-lg border border-zinc-200 px-2 py-1 hover:bg-zinc-50" href={azHref}>AZ</a>
+            </div>
+
+            <!-- WhatsApp genel -->
+            <a
+              href={waHeader}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="rounded-lg border border-zinc-200 px-3 py-2 text-xs hover:bg-zinc-50"
+            >
+              {tr.cta.whatsapp}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <script is:inline>
+        const btn = document.getElementById("menuBtn");
+        const menu = document.getElementById("mobileMenu");
+        if (btn && menu) {
+          btn.addEventListener("click", () => {
+            const isHidden = menu.classList.contains("hidden");
+            menu.classList.toggle("hidden");
+            btn.setAttribute("aria-expanded", String(isHidden));
+          });
+        }
+      </script>
     </header>
 
     <main class="container py-10">
@@ -97,13 +148,14 @@ const waHeader = getWhatsAppUrl(site.whatsappTexts.general);
         <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
           <p>© {new Date().getFullYear()} {site.brand}</p>
           <div class="flex gap-4">
-            <a class="hover:text-zinc-800" href="/yasal/kvkk">KVKK & Gizlilik</a>
+            <a class="hover:text-zinc-800" href={kvkkHref}>{tr.footer.kvkk}</a>
             <a class="hover:text-zinc-800" href={site.socials.instagram} target="_blank" rel="noopener noreferrer">Instagram</a>
             <a class="hover:text-zinc-800" href={site.socials.tiktok} target="_blank" rel="noopener noreferrer">TikTok</a>
           </div>
         </div>
+
         <p class="mt-4 text-xs text-zinc-500">
-          Bilgilendirme amaçlıdır. Resmî kurum değildir; süreç ve sonuçlar dosyaya göre değişebilir.
+          {tr.footer.disclaimer}
         </p>
       </div>
     </footer>

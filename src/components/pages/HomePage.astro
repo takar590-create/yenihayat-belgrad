@@ -1,0 +1,250 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { site, getWhatsAppUrl } from "../../config/site";
+
+import { getLangFromPath, withLang } from "../../i18n/lang.ts";
+import { t } from "../../i18n/translations";
+
+const lang = getLangFromPath(Astro.url.pathname);
+const tr = t(lang);
+
+// WhatsApp linklerini dile göre metinle üret
+const waGeneral = getWhatsAppUrl(tr.home.waText.general);
+const waOffer = getWhatsAppUrl(tr.home.waText.offer);
+
+// İç linkler dile göre prefix almalı
+const hrefProcess = withLang("/surec", lang);
+const hrefFaq = withLang("/sss", lang);
+const hrefServices = withLang("/hizmetler", lang);
+const hrefPackages = withLang("/paketler", lang);
+const hrefContact = withLang("/iletisim", lang);
+---
+
+<BaseLayout title={site.title} description={site.description}>
+  <!-- HERO -->
+  <section class="grid gap-8 md:grid-cols-2 md:items-center">
+    <div>
+      <span class="badge">{tr.home.hero.badge}</span>
+      <h1 class="mt-4 text-3xl font-bold tracking-tight md:text-5xl">
+        {tr.home.hero.title}
+      </h1>
+      <p class="mt-4 text-zinc-700">
+        {tr.home.hero.desc}
+      </p>
+
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+        <a class="btn btn-primary btn-3d" href={waGeneral} target="_blank" rel="noopener noreferrer">
+          {tr.home.hero.btnWhatsapp}
+        </a>
+        <a class="btn btn-ghost" href={hrefProcess}>{tr.home.hero.btnProcess}</a>
+      </div>
+
+      <div class="mt-6 grid gap-3 md:grid-cols-3">
+        {tr.home.hero.cards.map((c) => (
+          <div class="card p-4">
+            <p class="text-sm font-semibold">{c.t}</p>
+            <p class="mt-1 text-sm text-zinc-600">{c.d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="card p-6">
+      <p class="text-sm font-semibold">{tr.home.faqBox.title}</p>
+      <ul class="mt-4 space-y-3 text-sm text-zinc-700">
+        {tr.home.faqBox.items.map((q) => <li>• {q}</li>)}
+      </ul>
+      <a class="btn btn-primary mt-6 w-full" href={hrefFaq}>{tr.home.faqBox.btn}</a>
+    </div>
+  </section>
+
+  <!-- HİZMETLER ÖZET -->
+  <section class="mt-14">
+    <h2 class="text-xl font-bold">{tr.home.services.title}</h2>
+
+    <div class="mt-6 grid gap-4 md:grid-cols-3">
+      {tr.home.services.items.map((x) => (
+        <div class="card p-5">
+          <p class="font-semibold">{x.t}</p>
+          <p class="mt-2 text-sm text-zinc-600">{x.d}</p>
+        </div>
+      ))}
+    </div>
+
+    <a class="btn btn-ghost mt-6" href={hrefServices}>{tr.home.services.btnAll}</a>
+  </section>
+
+  <!-- SÜREÇTEN TAŞINAN KARTLAR -->
+  <section class="mt-14">
+    <h2 class="text-xl font-bold">{tr.home.activation.title}</h2>
+    <p class="mt-2 text-sm text-zinc-700">
+      {tr.home.activation.desc}
+    </p>
+
+    <div class="mt-6 grid gap-4 md:grid-cols-2">
+      <div class="card p-6">
+        <h3 class="text-lg font-bold">{tr.home.activation.card1Title}</h3>
+        <ul class="mt-3 space-y-2 text-sm text-zinc-700">
+          {tr.home.activation.card1Items.map((it) => (
+            <li>
+              • <span class="font-semibold">{it.a}</span> {it.b}
+            </li>
+          ))}
+        </ul>
+        <p class="mt-3 text-xs text-zinc-500">
+          {tr.home.activation.card1Note}
+        </p>
+      </div>
+
+      <div class="card p-6">
+        <h3 class="text-lg font-bold">{tr.home.activation.card2Title}</h3>
+        <ul class="mt-3 space-y-2 text-sm text-zinc-700">
+          {tr.home.activation.card2Items.map((x) => (
+            <li>• {x.replace(/(\d[\d\.]*\s*dinar|2x|15 günde 1|haftalık)/g, (m) => m)}</li>
+          ))}
+        </ul>
+        <p class="mt-3 text-xs text-zinc-500">
+          {tr.home.activation.card2Note}
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+      <a class="btn btn-ghost" href={hrefProcess}>{tr.home.activation.btnDetail}</a>
+      <a class="btn btn-primary btn-3d" href={waGeneral} target="_blank" rel="noopener noreferrer">
+        {tr.home.activation.btnAsk}
+      </a>
+    </div>
+  </section>
+
+  <!-- KAZANÇ ÖRNEKLERİ -->
+  <section class="mt-14">
+    <h2 class="text-xl font-bold">{tr.home.earnings.title}</h2>
+    <p class="mt-2 text-sm text-zinc-700 max-w-3xl">
+      {tr.home.earnings.desc}
+    </p>
+
+    <div class="mt-6 grid gap-4 md:grid-cols-2">
+      <!-- WOLT -->
+      <div class="card p-6">
+        <div class="flex items-baseline justify-between gap-3">
+          <h3 class="text-lg font-bold">{tr.home.earnings.wolt.title}</h3>
+          <span class="badge">{tr.home.earnings.wolt.badge}</span>
+        </div>
+
+        <ul class="mt-4 space-y-2 text-sm text-zinc-700">
+          {tr.home.earnings.wolt.bullets.map((b) => <li>• {b}</li>)}
+        </ul>
+
+        <div class="mt-5 grid gap-3">
+          <div class="card p-4">
+            <p class="text-sm font-semibold">{tr.home.earnings.wolt.cardA.title}</p>
+            <p class="mt-1 text-sm text-zinc-700">{tr.home.earnings.wolt.cardA.line1}</p>
+            <p class="mt-1 text-sm text-zinc-700">{tr.home.earnings.wolt.cardA.line2}</p>
+          </div>
+
+          <div class="card p-4">
+            <p class="text-sm font-semibold">{tr.home.earnings.wolt.cardB.title}</p>
+            <p class="mt-1 text-sm text-zinc-700">{tr.home.earnings.wolt.cardB.line}</p>
+          </div>
+        </div>
+
+        <a class="btn btn-primary btn-3d mt-5 w-full" href={waOffer} target="_blank" rel="noopener noreferrer">
+          {tr.home.earnings.wolt.btn}
+        </a>
+      </div>
+
+      <!-- GLOVO -->
+      <div class="card p-6">
+        <div class="flex items-baseline justify-between gap-3">
+          <h3 class="text-lg font-bold">{tr.home.earnings.glovo.title}</h3>
+          <span class="badge">{tr.home.earnings.glovo.badge}</span>
+        </div>
+
+        <ul class="mt-4 space-y-2 text-sm text-zinc-700">
+          {tr.home.earnings.glovo.bullets.map((b) => <li>• {b}</li>)}
+        </ul>
+
+        <div class="mt-5 grid gap-3">
+          <div class="card p-4">
+            <p class="text-sm font-semibold">{tr.home.earnings.glovo.cardA.title}</p>
+            <p class="mt-1 text-sm text-zinc-700">{tr.home.earnings.glovo.cardA.line1}</p>
+            <p class="mt-1 text-sm text-zinc-700">{tr.home.earnings.glovo.cardA.line2}</p>
+          </div>
+
+          <div class="card p-4">
+            <p class="text-sm font-semibold">{tr.home.earnings.glovo.cardB.title}</p>
+            <p class="mt-1 text-sm text-zinc-700">{tr.home.earnings.glovo.cardB.line}</p>
+          </div>
+        </div>
+
+        <a class="btn btn-primary btn-3d mt-5 w-full" href={waOffer} target="_blank" rel="noopener noreferrer">
+          {tr.home.earnings.glovo.btn}
+        </a>
+      </div>
+    </div>
+
+    <p class="mt-4 text-xs text-zinc-500">
+      {tr.home.earnings.warning}
+    </p>
+  </section>
+
+  <!-- PAKETLER ÖNİZLEME -->
+  <section class="mt-14">
+    <h2 class="text-xl font-bold">{tr.home.packagesPreview.title}</h2>
+    <p class="mt-2 text-sm text-zinc-700">
+      {tr.home.packagesPreview.desc}
+    </p>
+
+    <div class="mt-6 grid gap-4 md:grid-cols-2">
+      <!-- Paket 3 -->
+      <div class="card p-6">
+        <div class="flex items-baseline justify-between gap-3">
+          <p class="text-lg font-bold">{tr.home.packagesPreview.p3.title}</p>
+          <p class="text-lg font-bold">{tr.home.packagesPreview.p3.price}</p>
+        </div>
+        <p class="mt-1 text-sm text-zinc-600">{tr.home.packagesPreview.p3.desc}</p>
+        <ul class="mt-4 space-y-2 text-sm text-zinc-700">
+          {tr.home.packagesPreview.p3.items.map((x) => <li>• {x}</li>)}
+        </ul>
+      </div>
+
+      <!-- Paket 2 -->
+      <div class="card p-6">
+        <div class="flex items-baseline justify-between gap-3">
+          <p class="text-lg font-bold">{tr.home.packagesPreview.p2.title}</p>
+          <p class="text-lg font-bold">{tr.home.packagesPreview.p2.price}</p>
+        </div>
+        <p class="mt-1 text-sm text-zinc-600">{tr.home.packagesPreview.p2.desc}</p>
+        <ul class="mt-4 space-y-2 text-sm text-zinc-700">
+          {tr.home.packagesPreview.p2.items.map((x) => <li>• {x}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+      <a class="btn btn-primary btn-3d" href={hrefPackages}>{tr.home.packagesPreview.btnGo}</a>
+      <a class="btn btn-ghost" href={waOffer} target="_blank" rel="noopener noreferrer">
+        {tr.home.packagesPreview.btnOffer}
+      </a>
+    </div>
+
+    <p class="mt-3 text-xs text-zinc-500">
+      {tr.home.packagesPreview.note}
+    </p>
+  </section>
+
+  <!-- TEKLİF -->
+  <section class="mt-14 card p-6">
+    <h2 class="text-xl font-bold">{tr.home.offer.title}</h2>
+    <p class="mt-2 text-sm text-zinc-700">
+      {tr.home.offer.desc}
+    </p>
+    <div class="mt-4 flex flex-col gap-3 sm:flex-row">
+      <a class="btn btn-primary btn-3d" href={waOffer} target="_blank" rel="noopener noreferrer">
+        {tr.home.offer.btnOffer}
+      </a>
+      <a class="btn btn-ghost" href={hrefContact}>{tr.home.offer.btnContact}</a>
+    </div>
+  </section>
+</BaseLayout>

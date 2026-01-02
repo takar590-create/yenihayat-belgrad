@@ -1,25 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import { site } from "../config/site";
+import ServicesPage from "../components/pages/ServicesPage.astro";
 ---
 
-<BaseLayout title={`Hizmetler | ${site.brand}`} description="Belgrad kurye danışmanlığı hizmetleri: şirket, oturum, işe başlatma, konaklama, araç, banka.">
-  <h1 class="text-2xl font-bold">Hizmetler</h1>
-  <p class="mt-2 text-zinc-700">Belgrad odaklı uçtan uca destek.</p>
-
-  <div class="mt-8 grid gap-4 md:grid-cols-2">
-    {[
-      ["Şirket Kuruluşu", "Belgrad’da şirket açılış sürecini planlar, doğru adımlarla ilerlersin."],
-      ["Oturum Başvurusu", "Başvuru hazırlığı, randevu planı ve süreç takibi."],
-      ["Glovo & Wolt Hesap Açılışı", "Hesap açılışı ve işe başlangıç adımları için yönlendirme."],
-      ["Araç Kiralama", "Bisiklet/motor/araba seçeneklerinden birisini bütçene ve hedeflerine göre kiralarız."],
-      ["Konaklama", "Hostel/ev seçenekleri ve ilk gün planlaması."],
-      ["Banka Hesabı", "Kişisel/şirket hesabı için gerekli adımların netleştirilmesi."],
-    ].map(([t, d]) => (
-      <div class="card p-6">
-        <p class="text-lg font-semibold">{t}</p>
-        <p class="mt-2 text-sm text-zinc-700">{d}</p>
-      </div>
-    ))}
-  </div>
-</BaseLayout>
+<ServicesPage lang="tr" />

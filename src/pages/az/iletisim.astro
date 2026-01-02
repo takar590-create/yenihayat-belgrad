@@ -1,0 +1,50 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContactLinks from "../../components/ContactLinks.astro";
+import { getWhatsAppUrl, site } from "../../config/site";
+import { t } from "../../i18n/translations";
+
+const L = t("az");
+
+// WhatsApp metinleri: tek kaynak (faq.waText.*)
+const waOffer = getWhatsAppUrl(L.faq.waText.offer);
+const waDocs = getWhatsAppUrl(L.faq.waText.documents);
+const waGeneral = getWhatsAppUrl(L.faq.waText.general);
+---
+
+<BaseLayout title={`${L.contact.pageTitle} | ${site.brand}`} description={L.contact.metaDescription}>
+  <h1 class="text-2xl font-bold">{L.contact.heading}</h1>
+  <p class="mt-2 text-zinc-700">{L.contact.intro}</p>
+
+  <div class="mt-4">
+    <ContactLinks variant="page" showLabels={true} />
+  </div>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-3">
+    <div class="card p-6">
+      <p class="font-semibold">{L.contact.cards.offer.title}</p>
+      <p class="mt-2 text-sm text-zinc-700">{L.contact.cards.offer.desc}</p>
+      <a class="btn btn-primary mt-4 w-full" href={waOffer} target="_blank" rel="noopener noreferrer">
+        {L.contact.cards.offer.btn}
+      </a>
+    </div>
+
+    <div class="card p-6">
+      <p class="font-semibold">{L.contact.cards.docs.title}</p>
+      <p class="mt-2 text-sm text-zinc-700">{L.contact.cards.docs.desc}</p>
+      <a class="btn btn-ghost mt-4 w-full" href={waDocs} target="_blank" rel="noopener noreferrer">
+        {L.contact.cards.docs.btn}
+      </a>
+    </div>
+
+    <div class="card p-6">
+      <p class="font-semibold">{L.contact.cards.eligibility.title}</p>
+      <p class="mt-2 text-sm text-zinc-700">{L.contact.cards.eligibility.desc}</p>
+      <a class="btn btn-ghost mt-4 w-full" href={waGeneral} target="_blank" rel="noopener noreferrer">
+        {L.contact.cards.eligibility.btn}
+      </a>
+    </div>
+  </div>
+
+  <div class="mt-6 text-xs text-zinc-500">{L.contact.note}</div>
+</BaseLayout>

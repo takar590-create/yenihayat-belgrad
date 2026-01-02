@@ -7,6 +7,12 @@ export const site = {
   // wa.me için numara: ülke kodu ile, + olmadan (örn: 3816XXXXXXXX)
   whatsappNumber: "3816XXXXXXXX", // TODO: numaranı yaz
 
+  /**
+   * ⚠️ DEPRECATED:
+   * Artık TR/AZ WhatsApp metinlerini src/i18n/translations.ts içinden yönetiyoruz.
+   * Burayı geriye dönük uyumluluk için bırakıyorum.
+   * Yeni kullanım: t(lang).home.waText.general / offer
+   */
   whatsappTexts: {
     general:
       "Merhaba, Belgrad kurye danışmanlığı için yazıyorum. Uygunluk kontrolü almak istiyorum.",

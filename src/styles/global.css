@@ -38,10 +38,14 @@ body {
 
 /* Header sosyal ikon butonları */
 .icon-btn {
-  @apply inline-flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50;
+  @apply inline-flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-900 shadow-sm transition hover:bg-zinc-50;
 }
 
-/* 3D buton efekti (kullanıyorsan) */
+.icon-btn svg {
+  @apply h-5 w-5;
+}
+
+/* 3D buton efekti */
 .btn-3d {
   transform: translateY(0);
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.18);
@@ -55,15 +59,4 @@ body {
 .btn-3d:active {
   transform: translateY(2px);
   box-shadow: 0 3px 0 rgba(0, 0, 0, 0.18);
-
-
-.icon-btn {
-  @apply inline-flex h-10 w-10 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-900 shadow-sm transition hover:bg-zinc-50;
 }
-
-.icon-btn svg {
-  @apply h-5 w-5;
-}
-
-}
-

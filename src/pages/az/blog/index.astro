@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { site } from "../../../config/site";
+import { getCollection } from "astro:content";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title={`Bloq | ${site.brand}`} description="Belqrad kuryer və oturum prosesi haqqında bələdçi yazılar.">
+  <h1 class="text-2xl font-bold">Bloq</h1>
+  <p class="mt-2 text-zinc-700">Bələdçi məzmunlar və tez-tez verilən suallara detallı izahlar.</p>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-2">
+    {posts.map((p) => (
+      <a class="card p-6 hover:bg-zinc-50" href={`/az/blog/${p.slug}/`}>
+        <p class="text-xs text-zinc-500">
+          {p.data.pubDate.toLocaleDateString("az-AZ")}
+        </p>
+        <p class="mt-2 text-lg font-semibold">{p.data.title}</p>
+        <p class="mt-2 text-sm text-zinc-700">{p.data.description}</p>
+      </a>
+    ))}
+  </div>
+</BaseLayout>

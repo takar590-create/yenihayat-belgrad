@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { site } from "../../config/site";
+
+import { getLangFromPath } from "../../i18n/lang.ts";
+import { t, type Lang } from "../../i18n/translations";
+
+// ✅ Props öncelikli, yoksa path'ten tespit
+const lang: Lang = (Astro.props.lang as Lang) ?? getLangFromPath(Astro.url.pathname);
+const dict = t(lang);
+
+const pageTitle = `${dict.services.pageTitle} | ${site.brand}`;
+---
+
+<BaseLayout title={pageTitle} description={dict.services.metaDescription}>
+  <h1 class="text-2xl font-bold">{dict.services.pageTitle}</h1>
+  <p class="mt-2 text-zinc-700">{dict.services.subtitle}</p>
+
+  <div class="mt-8 grid gap-4 md:grid-cols-2">
+    {dict.services.items.map((x) => (
+      <div class="card p-6">
+        <p class="text-lg font-semibold">{x.t}</p>
+        <p class="mt-2 text-sm text-zinc-700">{x.d}</p>
+      </div>
+    ))}
+  </div>
+</BaseLayout>
