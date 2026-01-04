@@ -5,7 +5,7 @@ export const site = {
   city: "Belgrad",
 
   // wa.me için numara: ülke kodu ile, + olmadan (örn: 3816XXXXXXXX)
-  whatsappNumber: "3816XXXXXXXX", // TODO: numaranı yaz
+  whatsappNumber: "381621465315", // TODO: numaranı yaz
 
   /**
    * ⚠️ DEPRECATED:
@@ -23,8 +23,8 @@ export const site = {
   },
 
   socials: {
-    instagram: "https://instagram.com/INSTAGRAM_KULLANICIADI",
-    tiktok: "https://www.tiktok.com/@TIKTOK_KULLANICIADI",
+    instagram: "https://www.instagram.com/yenihayatbelgrad?igsh=aG00ODdjaDRjM21r",
+    tiktok: "https://www.tiktok.com/@yenihayatbeograd?_r=1&_t=ZS-92nD2DlwfGG",
   },
 
   title: "Belgrad Kurye Danışmanlığı | Şirket + Oturum + İşe Başlatma",
