@@ -5,7 +5,7 @@ export const site = {
   city: "Belgrad",
 
   // wa.me için numara: ülke kodu ile, + olmadan (örn: 3816XXXXXXXX)
-  whatsappNumber: "381621465315", // TODO: numaranı yaz
+  whatsappNumber: "381621442282", // TODO: numaranı yaz
 
   /**
    * ⚠️ DEPRECATED:
